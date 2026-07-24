@@ -1,35 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Standings{% endblock %}
 {% block content %}
-<h1>Championship Standings</h1>
-{% if not standings %}
-  <p>No races imported yet.</p>
-{% else %}
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Driver</th>
-      <th>Points</th>
-      <th>Races</th>
-      <th>Wins</th>
-      <th>Podiums</th>
-      <th>Fastest Laps</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in standings %}
-    <tr>
-      <td>{{ loop.index }}</td>
-      <td>{{ row.display_name }}</td>
-      <td>{{ row.total_points }}</td>
-      <td>{{ row.races_entered }}</td>
-      <td>{{ row.wins }}</td>
-      <td>{{ row.podiums }}</td>
-      <td>{{ row.fastest_laps }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endif %}
+<h1 class="page-title">Championship Standings</h1>
+<div class="card">
+  <div class="section-header">
+    <h3>Drivers</h3>
+    <p class="section-hint">{{ standings | length }} driver{{ 's' if standings | length != 1 }}</p>
+  </div>
+  {% if not standings %}
+    <p class="empty-state">No races imported yet.</p>
+  {% else %}
+  <table>
+    <thead>
+      <tr>
+        <th class="num">#</th>
+        <th>Driver</th>
+        <th class="num">Points</th>
+        <th class="num">Races</th>
+        <th class="num">Wins</th>
+        <th class="num">Podiums</th>
+        <th class="num">Fastest Laps</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in standings %}
+      <tr>
+        <td class="num text-muted">{{ loop.index }}</td>
+        <td>{{ row.display_name }}</td>
+        <td class="num text-best">{{ row.total_points }}</td>
+        <td class="num">{{ row.races_entered }}</td>
+        <td class="num">{{ row.wins }}</td>
+        <td class="num">{{ row.podiums }}</td>
+        <td class="num">{{ row.fastest_laps }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
 {% endblock %}

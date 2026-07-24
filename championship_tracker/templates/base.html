@@ -2,17 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Championship{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Championship{% endblock %} · Pits n' Giggles</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <nav>
-    <a href="{{ url_for('standings') }}">Standings</a>
-    <a href="{{ url_for('races') }}">Races</a>
-    <a href="{{ url_for('admin') }}">Admin</a>
-  </nav>
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('standings') }}">Pits n' Giggles Championship</a>
+      <nav class="sidebar-nav">
+        <a href="{{ url_for('standings') }}" class="{{ 'active' if request.endpoint == 'standings' }}">Standings</a>
+        <a href="{{ url_for('races') }}" class="{{ 'active' if request.endpoint in ('races', 'race_detail') }}">Races</a>
+        <a href="{{ url_for('admin') }}" class="{{ 'active' if request.endpoint in ('admin', 'admin_merge', 'admin_rename') }}">Admin</a>
+      </nav>
+    </aside>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
 </body>
 </html>

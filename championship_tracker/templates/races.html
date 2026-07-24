@@ -1,29 +1,35 @@
 {% extends "base.html" %}
 {% block title %}Races{% endblock %}
 {% block content %}
-<h1>Race History</h1>
-{% if not races %}
-  <p>No races imported yet.</p>
-{% else %}
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Track</th>
-      <th>Session</th>
-      <th>Laps</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for race in races %}
-    <tr>
-      <td><a href="{{ url_for('race_detail', session_uid=race.session_uid) }}">{{ race.race_timestamp }}</a></td>
-      <td>{{ race.track }}</td>
-      <td>{{ race.session_type }}</td>
-      <td>{{ race.total_laps }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endif %}
+<h1 class="page-title">Race History</h1>
+<div class="card">
+  <div class="section-header">
+    <h3>Sessions</h3>
+    <p class="section-hint">{{ races | length }} race{{ 's' if races | length != 1 }}</p>
+  </div>
+  {% if not races %}
+    <p class="empty-state">No races imported yet. Drop some session JSON into your Pits n' Giggles data folder.</p>
+  {% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Track</th>
+        <th>Session</th>
+        <th class="num">Laps</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for race in races %}
+      <tr>
+        <td><a href="{{ url_for('race_detail', session_uid=race.session_uid) }}">{{ race.race_timestamp }}</a></td>
+        <td>{{ race.track }}</td>
+        <td class="text-muted">{{ race.session_type }}</td>
+        <td class="num">{{ race.total_laps }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
 {% endblock %}
