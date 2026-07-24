@@ -1,0 +1,217 @@
+{
+  "session-info": {
+    "track-id": "Abu Dhabi",
+    "session-type": "Race",
+    "formula": "F1 26",
+    "total-laps": 5
+  },
+  "debug": {
+    "session-uid": 1086206222430817135,
+    "timestamp": "2026-07-15 20:08:15 W. Europe Daylight Time",
+    "file-name": "Race_Abu_Dhabi_2026_07_15_20_08_15.json"
+  },
+  "records": {
+    "fastest": {
+      "lap": {
+        "driver-index": 2,
+        "lap-number": 5,
+        "time": 85408,
+        "driver-name": "DDRK",
+        "team-id": "220",
+        "time-str": "01:25.408"
+      }
+    }
+  },
+  "classification-data": [
+    {
+      "index": 0,
+      "driver-name": "TTV/GreMi_Gaming",
+      "participant-data": {
+        "team-id": "222"
+      },
+      "final-classification": {
+        "position": 3,
+        "grid-position": 1,
+        "points": 15,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 86200,
+        "best-lap-time-str": "01:26.200",
+        "total-race-time": 442.3284606933594,
+        "total-race-time-str": "07:22.328",
+        "penalties-time": 2,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 1,
+      "driver-name": "Dmitriy_Glinnik",
+      "participant-data": {
+        "team-id": "222"
+      },
+      "final-classification": {
+        "position": 1,
+        "grid-position": 6,
+        "points": 25,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 86074,
+        "best-lap-time-str": "01:26.074",
+        "total-race-time": 440.1258850097656,
+        "total-race-time-str": "07:20.125",
+        "penalties-time": 0,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 2,
+      "driver-name": "DDRK",
+      "participant-data": {
+        "team-id": "220"
+      },
+      "final-classification": {
+        "position": 8,
+        "grid-position": 4,
+        "points": 4,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 85408,
+        "best-lap-time-str": "01:25.408",
+        "total-race-time": 487.5933837890625,
+        "total-race-time-str": "08:07.593",
+        "penalties-time": 0,
+        "num-pit-stops": 1
+      }
+    },
+    {
+      "index": 3,
+      "driver-name": "niet_Lars123",
+      "participant-data": {
+        "team-id": "230"
+      },
+      "final-classification": {
+        "position": 6,
+        "grid-position": 10,
+        "points": 8,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 87714,
+        "best-lap-time-str": "01:27.714",
+        "total-race-time": 451.4620361328125,
+        "total-race-time-str": "07:31.462",
+        "penalties-time": 2,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 4,
+      "driver-name": "JSA_428",
+      "participant-data": {
+        "team-id": "220"
+      },
+      "final-classification": {
+        "position": 10,
+        "grid-position": 9,
+        "points": 0,
+        "result-status": "DID_NOT_FINISH",
+        "best-lap-time-ms": 0,
+        "best-lap-time-str": "00:00.000",
+        "total-race-time": 0.0,
+        "total-race-time-str": "00:00.000",
+        "penalties-time": 0,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 5,
+      "driver-name": "221 #45",
+      "participant-data": {
+        "team-id": "221"
+      },
+      "final-classification": {
+        "position": 9,
+        "grid-position": 2,
+        "points": 0,
+        "result-status": "DID_NOT_FINISH",
+        "best-lap-time-ms": 87100,
+        "best-lap-time-str": "01:27.100",
+        "total-race-time": 313.3006286621094,
+        "total-race-time-str": "05:13.300",
+        "penalties-time": 10,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 6,
+      "driver-name": "EthanMoonski",
+      "participant-data": {
+        "team-id": "221"
+      },
+      "final-classification": {
+        "position": 2,
+        "grid-position": 8,
+        "points": 18,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 86619,
+        "best-lap-time-str": "01:26.619",
+        "total-race-time": 440.83502197265625,
+        "total-race-time-str": "07:20.835",
+        "penalties-time": 3,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 7,
+      "driver-name": "TTV_Hiddegam1ng",
+      "participant-data": {
+        "team-id": "229"
+      },
+      "final-classification": {
+        "position": 4,
+        "grid-position": 3,
+        "points": 12,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 88339,
+        "best-lap-time-str": "01:28.339",
+        "total-race-time": 447.58154296875,
+        "total-race-time-str": "07:27.581",
+        "penalties-time": 2,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 8,
+      "driver-name": "229 #3",
+      "participant-data": {
+        "team-id": "229"
+      },
+      "final-classification": {
+        "position": 5,
+        "grid-position": 5,
+        "points": 10,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 87640,
+        "best-lap-time-str": "01:27.640",
+        "total-race-time": 447.3231506347656,
+        "total-race-time-str": "07:27.323",
+        "penalties-time": 6,
+        "num-pit-stops": 0
+      }
+    },
+    {
+      "index": 9,
+      "driver-name": "224 #2",
+      "participant-data": {
+        "team-id": "224"
+      },
+      "final-classification": {
+        "position": 7,
+        "grid-position": 7,
+        "points": 6,
+        "result-status": "FINISHED",
+        "best-lap-time-ms": 87264,
+        "best-lap-time-str": "01:27.264",
+        "total-race-time": 453.44024658203125,
+        "total-race-time-str": "07:33.440",
+        "penalties-time": 23,
+        "num-pit-stops": 0
+      }
+    }
+  ]
+}

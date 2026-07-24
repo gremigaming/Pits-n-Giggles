@@ -1,0 +1,14 @@
+{
+  "watch_dir": "/path/to/pits-n-giggles/data",
+  "db_path": "championship.db",
+  "poll_interval_seconds": 10,
+  "fastest_lap_bonus": true,
+  "fastest_lap_bonus_requires_top10": true,
+  "fastest_lap_bonus_points": 1,
+  "web_host": "0.0.0.0",
+  "web_port": 5000,
+  "points_scale": {
+    "1": 25, "2": 18, "3": 15, "4": 12, "5": 10,
+    "6": 8, "7": 6, "8": 4, "9": 2, "10": 1
+  }
+}

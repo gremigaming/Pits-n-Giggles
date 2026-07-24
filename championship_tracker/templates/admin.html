@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<h1>Unidentified Drivers</h1>
+<p>These are viewers whose in-game broadcast/privacy settings hid their real name.
+   Merge them into an existing driver, or rename them once you know who it was.</p>
+{% if not pending %}
+  <p>Nothing needs review.</p>
+{% else %}
+<table>
+  <thead>
+    <tr>
+      <th>Race</th>
+      <th>Position</th>
+      <th>Alias seen</th>
+      <th>Merge into existing driver</th>
+      <th>Or rename to new driver</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in pending %}
+    <tr>
+      <td><a href="{{ url_for('race_detail', session_uid=row.session_uid) }}">{{ row.track }} ({{ row.race_timestamp }})</a></td>
+      <td>{{ row.position }}</td>
+      <td>{{ row.alias_used }}</td>
+      <td>
+        <form method="post" action="{{ url_for('admin_merge') }}">
+          <input type="hidden" name="from_driver_id" value="{{ row.driver_id }}">
+          <select name="into_driver_id">
+            {% for d in known_drivers %}
+            <option value="{{ d.id }}">{{ d.display_name }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Merge</button>
+        </form>
+      </td>
+      <td>
+        <form method="post" action="{{ url_for('admin_rename') }}">
+          <input type="hidden" name="driver_id" value="{{ row.driver_id }}">
+          <input type="text" name="new_name" placeholder="Driver name">
+          <button type="submit">Save</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

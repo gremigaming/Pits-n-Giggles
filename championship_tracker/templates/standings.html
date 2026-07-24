@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Standings{% endblock %}
+{% block content %}
+<h1>Championship Standings</h1>
+{% if not standings %}
+  <p>No races imported yet.</p>
+{% else %}
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Driver</th>
+      <th>Points</th>
+      <th>Races</th>
+      <th>Wins</th>
+      <th>Podiums</th>
+      <th>Fastest Laps</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in standings %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ row.display_name }}</td>
+      <td>{{ row.total_points }}</td>
+      <td>{{ row.races_entered }}</td>
+      <td>{{ row.wins }}</td>
+      <td>{{ row.podiums }}</td>
+      <td>{{ row.fastest_laps }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

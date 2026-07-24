@@ -1,0 +1,64 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --border: #ddd;
+  --accent: #e10600;
+  --row-alt: #f7f7f7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --fg: #eaeaea;
+    --border: #333;
+    --row-alt: #1c1c1c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 0 1.5rem 2rem;
+}
+
+nav {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+nav a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+nav a:hover { color: var(--accent); }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 900px;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr:nth-child(even) { background: var(--row-alt); }
+
+select, input[type="text"], button {
+  font-size: 0.9rem;
+  padding: 0.2rem 0.4rem;
+}
+
+form { display: inline-flex; gap: 0.4rem; align-items: center; }
