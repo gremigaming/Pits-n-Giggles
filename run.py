@@ -20,8 +20,9 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 def main():
     config = load_config()
 
-    watcher_thread = threading.Thread(target=run_forever, args=(config,), daemon=True)
-    watcher_thread.start()
+    if config.get("run_watcher", True):
+        watcher_thread = threading.Thread(target=run_forever, args=(config,), daemon=True)
+        watcher_thread.start()
 
     app = create_app(config)
     app.run(host=config["web_host"], port=config["web_port"])

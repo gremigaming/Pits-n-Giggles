@@ -4,10 +4,11 @@ import logging
 import secrets
 from functools import wraps
 
-from flask import Flask, Response, abort, redirect, render_template, request, url_for
+from flask import Flask, Response, abort, jsonify, redirect, render_template, request, url_for
 
 from . import db
 from .config import load_config
+from .ingest import import_race, parse_race_json
 
 logger = logging.getLogger(__name__)
 
@@ -109,6 +110,33 @@ def create_app(config: dict | None = None) -> Flask:
                 (session_uid,),
             ).fetchall()
         return render_template("race_detail.html", race=race, results=results)
+
+    @app.route("/api/ingest", methods=["POST"])
+    def api_ingest():
+        """Receive a race JSON payload uploaded by uploader.py running on a
+        machine that actually has the Pits-n-Giggles data folder (this server
+        may not). Disabled (404) unless upload_token is configured.
+        """
+        upload_token = config.get("upload_token") or ""
+        if not upload_token:
+            abort(404)
+        provided = request.headers.get("X-Upload-Token", "")
+        if not secrets.compare_digest(provided, upload_token):
+            abort(401)
+
+        race_json = request.get_json(silent=True)
+        if not isinstance(race_json, dict):
+            return jsonify({"error": "expected a JSON object body"}), 400
+
+        source_label = race_json.get("debug", {}).get("file-name", "upload")
+        try:
+            race = parse_race_json(race_json, config, source_label)
+        except KeyError as exc:
+            return jsonify({"error": f"missing expected field: {exc}"}), 400
+
+        with db.connect(config["db_path"]) as conn:
+            imported = import_race(conn, race)
+        return jsonify({"imported": imported}), 200
 
     @app.route("/admin")
     @require_admin_auth

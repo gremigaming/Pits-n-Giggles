@@ -30,6 +30,12 @@ DEFAULTS = {
     # Leave admin_password blank to keep the admin panel local-only (disabled).
     "admin_username": "admin",
     "admin_password": "",
+    # Set to False on a server deployment that has no local Pits-n-Giggles
+    # data folder to watch — races arrive via POST /api/ingest instead.
+    "run_watcher": True,
+    # Shared secret required on POST /api/ingest (see uploader.py). Leave
+    # blank to keep the upload endpoint disabled (404).
+    "upload_token": "",
 }
 
 

@@ -1,0 +1,6 @@
+{
+  "watch_dir": "C:/path/to/pits-n-giggles/data",
+  "remote_url": "https://standings.gremigaming.com/api/ingest",
+  "upload_token": "same-secret-as-the-dashboard-server's-upload_token",
+  "poll_interval_seconds": 10
+}

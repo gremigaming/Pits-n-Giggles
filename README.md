@@ -44,16 +44,39 @@ back to the defaults in `championship_tracker/config.py`.
 
 ## Making it public to viewers
 
-By default the app only listens on `127.0.0.1` (your own machine). To let viewers see the
-standings, run it as usual and put something in front of it that gives it a public URL — e.g. a
-[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
-pointed at `http://localhost:5000` if your domain's DNS is on Cloudflare.
+Before exposing this anywhere: set `admin_password` in `config.json` to something real. The
+`/admin` page (driver merge/rename) is HTTP Basic Auth-protected using
+`admin_username`/`admin_password`, and is **disabled entirely** (404) if `admin_password` is left
+blank — it's meant to only ever be used by you, never by viewers. The standings, race history, and
+race detail pages have no auth and are meant to be public.
 
-Before exposing it: set `admin_password` in `config.json` to something real. The `/admin` page
-(driver merge/rename) is HTTP Basic Auth-protected using `admin_username`/`admin_password`, and is
-**disabled entirely** (404) if `admin_password` is left blank — it's meant to only ever be used by
-you, never by viewers. The standings, race history, and race detail pages have no auth and are
-meant to be public.
+There are two ways to host this publicly, depending on whether the dashboard runs on the same
+machine as Pits n' Giggles or on a separate always-on server:
+
+### Option A: same machine, tunneled out
+
+Run `python run.py` as usual (it watches the local data folder and serves the dashboard together),
+then put a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+in front of `http://localhost:5000` if your domain's DNS is on Cloudflare. Only reachable while
+that machine and both processes are running.
+
+### Option B: dashboard on a separate always-on server (e.g. a VPS)
+
+Since the server hosting the dashboard doesn't have the Pits n' Giggles data folder, race results
+have to be pushed to it instead of read off disk:
+
+- **On the server**: set `run_watcher: false` and `upload_token` (a shared secret) in `config.json`,
+  and serve `wsgi:app` with a production WSGI server (see `deploy/championship-tracker.service` for
+  a systemd unit running gunicorn, and `deploy/Caddyfile` for a reverse proxy + automatic HTTPS in
+  front of it).
+- **On the machine that actually runs Pits n' Giggles**: run `python run_uploader.py` instead of
+  `run.py`. Configure it via `uploader_config.json` (see `uploader_config.json.example`) with the
+  local `watch_dir`, the server's public `remote_url` (e.g.
+  `https://standings.gremigaming.com/api/ingest`), and the same `upload_token` as the server. It
+  watches the data folder and POSTs new race files to the server; already-uploaded files are
+  tracked locally so nothing gets re-sent.
+- `POST /api/ingest` requires an `X-Upload-Token` header matching the server's `upload_token`, and
+  is disabled (404) if `upload_token` is left blank on the server.
 
 ## Tests
 

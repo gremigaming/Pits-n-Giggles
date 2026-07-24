@@ -3,5 +3,6 @@ __pycache__/
 .pytest_cache/
 *.db
 config.json
+uploader_config.json
 .venv/
 venv/

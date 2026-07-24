@@ -3,7 +3,7 @@
 import json
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 from . import db
 
@@ -37,14 +37,15 @@ def _fastest_lap_driver_index(race_json: dict) -> Optional[int]:
     return fastest.get("driver-index")
 
 
-def parse_race_file(path: Path, config: dict) -> dict:
-    """Parse a saved race JSON file into a dict ready for db import.
+def parse_race_json(race_json: dict, config: dict, source_label: str) -> dict:
+    """Parse an already-loaded race JSON payload into a dict ready for db import.
+
+    `source_label` is stored for reference only (a file path for locally
+    ingested races, or the original filename for races received over the
+    upload API) — it plays no role in dedup, which is keyed on session_uid.
 
     Returns a dict with race metadata and a list of per-driver result rows.
     """
-    with open(path, "r", encoding="utf-8") as f:
-        race_json = json.load(f)
-
     session_info = race_json["session-info"]
     debug_info = race_json["debug"]
     entries = race_json["classification-data"]
@@ -92,9 +93,16 @@ def parse_race_file(path: Path, config: dict) -> dict:
         "formula": session_info.get("formula"),
         "total_laps": session_info.get("total-laps"),
         "race_timestamp": debug_info.get("timestamp"),
-        "source_file": str(path),
+        "source_file": source_label,
         "results": results,
     }
+
+
+def parse_race_file(path: Path, config: dict) -> dict:
+    """Parse a saved race JSON file from disk into a dict ready for db import."""
+    with open(path, "r", encoding="utf-8") as f:
+        race_json = json.load(f)
+    return parse_race_json(race_json, config, str(path))
 
 
 def import_race(conn, race: dict) -> bool:
