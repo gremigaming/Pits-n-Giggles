@@ -24,8 +24,12 @@ DEFAULTS = {
     "fastest_lap_bonus": True,
     "fastest_lap_bonus_requires_top10": True,
     "fastest_lap_bonus_points": 1,
-    "web_host": "0.0.0.0",
+    "web_host": "127.0.0.1",
     "web_port": 5000,
+    # Required to access /admin once this is exposed beyond your own machine.
+    # Leave admin_password blank to keep the admin panel local-only (disabled).
+    "admin_username": "admin",
+    "admin_password": "",
 }
 
 

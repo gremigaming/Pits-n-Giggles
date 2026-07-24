@@ -1,8 +1,10 @@
 """Flask web app: standings, race history, and driver-identity admin."""
 
 import logging
+import secrets
+from functools import wraps
 
-from flask import Flask, abort, redirect, render_template, request, url_for
+from flask import Flask, Response, abort, redirect, render_template, request, url_for
 
 from . import db
 from .config import load_config
@@ -16,6 +18,31 @@ def create_app(config: dict | None = None) -> Flask:
 
     app = Flask(__name__)
     app.config["TRACKER_CONFIG"] = config
+
+    def require_admin_auth(view):
+        """Gate a view behind HTTP Basic Auth using admin_username/admin_password.
+
+        Standings/race pages are meant to be public once this is exposed to
+        viewers; the admin panel can merge/rename drivers, so it must not be.
+        If no admin_password is configured, the admin panel is disabled
+        entirely (404) rather than left open.
+        """
+        @wraps(view)
+        def wrapped(*args, **kwargs):
+            admin_password = config.get("admin_password") or ""
+            if not admin_password:
+                abort(404)
+            auth = request.authorization
+            valid = bool(auth) and secrets.compare_digest(
+                auth.username or "", config["admin_username"]
+            ) and secrets.compare_digest(auth.password or "", admin_password)
+            if not valid:
+                return Response(
+                    "Authentication required", 401,
+                    {"WWW-Authenticate": 'Basic realm="Championship Admin"'},
+                )
+            return view(*args, **kwargs)
+        return wrapped
 
     @app.template_filter("lap_time")
     def format_lap_time(ms):
@@ -84,6 +111,7 @@ def create_app(config: dict | None = None) -> Flask:
         return render_template("race_detail.html", race=race, results=results)
 
     @app.route("/admin")
+    @require_admin_auth
     def admin():
         with db.connect(config["db_path"]) as conn:
             pending = conn.execute(
@@ -103,6 +131,7 @@ def create_app(config: dict | None = None) -> Flask:
         return render_template("admin.html", pending=pending, known_drivers=known_drivers)
 
     @app.route("/admin/merge", methods=["POST"])
+    @require_admin_auth
     def admin_merge():
         from_driver_id = int(request.form["from_driver_id"])
         into_driver_id = int(request.form["into_driver_id"])
@@ -111,6 +140,7 @@ def create_app(config: dict | None = None) -> Flask:
         return redirect(url_for("admin"))
 
     @app.route("/admin/rename", methods=["POST"])
+    @require_admin_auth
     def admin_rename():
         driver_id = int(request.form["driver_id"])
         new_name = request.form["new_name"].strip()

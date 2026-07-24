@@ -42,6 +42,19 @@ folder every `poll_interval_seconds`.
 All settings live in `config.json` (see `config.json.example`); anything not overridden falls
 back to the defaults in `championship_tracker/config.py`.
 
+## Making it public to viewers
+
+By default the app only listens on `127.0.0.1` (your own machine). To let viewers see the
+standings, run it as usual and put something in front of it that gives it a public URL — e.g. a
+[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+pointed at `http://localhost:5000` if your domain's DNS is on Cloudflare.
+
+Before exposing it: set `admin_password` in `config.json` to something real. The `/admin` page
+(driver merge/rename) is HTTP Basic Auth-protected using `admin_username`/`admin_password`, and is
+**disabled entirely** (404) if `admin_password` is left blank — it's meant to only ever be used by
+you, never by viewers. The standings, race history, and race detail pages have no auth and are
+meant to be public.
+
 ## Tests
 
 ```bash
